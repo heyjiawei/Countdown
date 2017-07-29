@@ -1,3 +1,10 @@
+# Personal files
+actions/
+components/
+reducers/
+version1/
+version2
+
 # Logs
 logs
 *.log
@@ -56,4 +63,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
