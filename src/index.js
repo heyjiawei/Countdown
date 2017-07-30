@@ -48,14 +48,47 @@ class CountdownList extends React.Component {
 	}
 }
 
-class AddCountdown extends React.Component {
+class InputField extends React.Component {
+	render() {
+		return (
+			<input 
+				type='text'
+				placeholder={this.props.placeholder}
+				value={this.props.input}
+				onChange={this.props.handleInput}
+			/>
+		)
+	}
+}
+
+class DatePicker extends React.Component {
+	render() {
+		return (
+			<input 
+				type='date'
+				value={this.props.date}
+				onChange={this.props.handleDateInput}
+			/>
+		)
+	}
+}
+
+class CountdownForm extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			title: '',
-			date: '',
-			color: ''
+			title: this.props.title || '',
+			date: this.props.date || '',
+			color: this.props.color || ''
 		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			title: nextProps.title || '',
+			date: nextProps.date || '',
+			color: nextProps.color || ''
+		})
 	}
 
 	handleSubmit(e) {
@@ -95,22 +128,19 @@ class AddCountdown extends React.Component {
 				onSubmit={(e) => this.handleSubmit(e)}
 			>
 				<h3>Countdown </h3>
-				<input 
-					type='text' 
+				<InputField 
 					placeholder='title'
-					value={this.state.title}
-					onChange={(e) => this.handleTitleInput(e)}
+					input={this.state.title}
+					handleInput={(e) => this.handleTitleInput(e)}
 				/>
-				<input 
-					type='date' 
-					value={this.state.date}
-					onChange={(e) => this.handleDateInput(e)}
+				<DatePicker 
+					date={this.state.date}
+					handleDateInput={(e) => this.handleDateInput(e)}
 				/>
-				<input 
-					type='text'
+				<InputField 
 					placeholder='color'
-					value={this.state.color}
-					onChange={(e) => this.handleColorInput(e)}
+					input={this.state.color}
+					handleInput={(e) => this.handleColorInput(e)}
 				/>
 				<button type='submit'>Submit</button>
 			</form>
@@ -126,41 +156,51 @@ class CountdownApp extends React.Component {
 				{title: 'My Birthday', date: '2017-07-25', color: '#cddc39'},
 				{title: 'Driving Practice', date: '2017-07-29', color: '#8bc34a'},
 				{title: 'Korean BBQ', date: '2017-08-15', color: '#8bc34a'}
-			],
-			isEditForm: false
+			]
 		}
 	}
 
-	handleAddCountdown(data) {
-		const history = this.state.countdowns.slice()
-		this.setState({
-			countdowns: history.concat(data),
-		})
+	handleCountdownForm(data) {
+		if (this.state.editId) {
+			const index = this.state.editId
+			let countdowns = this.state.countdowns.slice()
+			countdowns[index] = data
+
+			this.setState({
+				title: '',
+				date: '',
+				color: '',
+				editId: null,
+				countdowns
+			})
+		
+		} else {
+			const history = this.state.countdowns.slice()
+			this.setState({
+				countdowns: history.concat(data),
+			})
+		}
 	}
 
 	handleDblClick(index) {
-		console.log('in handleDblClick')
-		console.log(index)
-
 		const countdownList = this.state.countdowns
 		const countdown = countdownList[index]
 		this.setState({
 			title: countdown.title,
 			date: countdown.date,
 			color: countdown.color,
-			isEditForm: true
+			editId: index
 		})
 	}
 
 	render() {
 		return (
 			<div>
-				<AddCountdown 
-					titleText={this.state.title}
+				<CountdownForm 
+					title={this.state.title}
 					date={this.state.date}
 					color={this.state.color}
-					isEditForm={this.state.isEditForm}
-					onSubmit={(data) => {this.handleAddCountdown(data)}}
+					onSubmit={(data) => {this.handleCountdownForm(data)}}
 				/>
 				<CountdownList 
 					countdowns={this.state.countdowns}
