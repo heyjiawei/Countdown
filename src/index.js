@@ -1,11 +1,28 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+class DeleteButton extends React.Component {
+	render() {
+		return (
+			<ul>
+				<button onClick={this.props.onDelete}>
+					delete
+				</button>
+			</ul>
+		)
+	}
+}
+
 class Countdown extends React.Component {
 	render () {
+		//console.log(this.props)
 		return (
-			<li onDoubleClick={this.props.onDoubleClick}>
+			<li 
+				onClick={this.props.onClick}
+				onDoubleClick={this.props.onDoubleClick}
+			>
 				{this.props.title} - {this.props.days}, {this.props.color}
+				{this.props.showDeleteButton ? <DeleteButton onDelete={this.props.onDelete}/> : null }
 			</li>
 		)
 	}
@@ -21,7 +38,9 @@ const calculateOffset = date => {
 
 class CountdownList extends React.Component {
 	countdowns() {
-		let onDoubleClick = this.props.onDoubleClick
+		let props = this.props
+		// let onClick = this.props.onClick
+		// let onDoubleClick = this.props.onDoubleClick
 		let rows = []
 		this.props.countdowns.forEach(function(countdown, index) {
 			 rows.push(
@@ -30,7 +49,10 @@ class CountdownList extends React.Component {
 					title={countdown.title} 
 					days={calculateOffset(countdown.date)}
 					color={countdown.color}
-					onDoubleClick={() => onDoubleClick(index)}
+					showDeleteButton={countdown.showDeleteButton}
+					onDelete={() => props.onDelete(index)}
+					onClick={() => props.onClick(index)}
+					onDoubleClick={() => props.onDoubleClick(index)}
 				/>
 			)			
 		})
@@ -153,9 +175,9 @@ class CountdownApp extends React.Component {
 		super()
 		this.state = {
 			countdowns: [
-				{title: 'My Birthday', date: '2017-07-25', color: '#cddc39'},
-				{title: 'Driving Practice', date: '2017-07-29', color: '#8bc34a'},
-				{title: 'Korean BBQ', date: '2017-08-15', color: '#8bc34a'}
+				{title: 'My Birthday', date: '2017-07-25', color: '#cddc39', showDeleteButton: false},
+				{title: 'Driving Practice', date: '2017-07-29', color: '#8bc34a', showDeleteButton: false},
+				{title: 'Korean BBQ', date: '2017-08-15', color: '#8bc34a', showDeleteButton: false}
 			]
 		}
 	}
@@ -165,7 +187,6 @@ class CountdownApp extends React.Component {
 			const index = this.state.editId
 			let countdowns = this.state.countdowns.slice()
 			countdowns[index] = data
-
 			this.setState({
 				title: '',
 				date: '',
@@ -175,11 +196,36 @@ class CountdownApp extends React.Component {
 			})
 		
 		} else {
+			data.showDeleteButton = false
 			const history = this.state.countdowns.slice()
 			this.setState({
 				countdowns: history.concat(data),
 			})
 		}
+	}
+
+	handleDelete(index) {
+		console.log('in handleDelete')
+		console.log(index)
+		let countdownList = this.state.countdowns.slice()
+		countdownList.splice(index, 1)
+		console.log(countdownList)
+
+		this.setState({
+			countdowns: countdownList
+		}, function() {
+			console.log('after setState')
+			console.log(this.state.countdowns)
+		})
+	}
+
+	handleCountdown(index) {
+		const countdownList = this.state.countdowns.slice()
+		let countdown = countdownList[index]
+		countdown.showDeleteButton = !countdown.showDeleteButton
+		this.setState({
+			countdowns: countdownList
+		})
 	}
 
 	handleDblClick(index) {
@@ -204,6 +250,8 @@ class CountdownApp extends React.Component {
 				/>
 				<CountdownList 
 					countdowns={this.state.countdowns}
+					onDelete={(index) => this.handleDelete(index)}
+					onClick={(index) => this.handleCountdown(index)}
 					onDoubleClick={(index) => this.handleDblClick(index)}
 				/>
 			</div>
