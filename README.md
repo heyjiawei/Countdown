@@ -12,7 +12,6 @@ git clone https://github.com/heyjiawei/Countdown.git
 Then, 
 <code>
 npm install
-npm start
 </code>
 
 In a separate command prompt window, you can set up hot-reloading with the following command:
