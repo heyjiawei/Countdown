@@ -1,11 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapEventPlugin from 'react-tap-event-plugin'
-
-import CountdownForm from '../components/CountdownForm'
-
-injectTapEventPlugin()
 
 class ButtonsGroup extends React.Component {
 	render() {
@@ -41,8 +35,9 @@ class Countdown extends React.Component {
 }
 
 const calculateOffset = date => {
+	let countdown = new Date(date)
 	let today = new Date
-	let timeDiff = date.getTime() - today.getTime()
+	let timeDiff = countdown.getTime() - today.getTime()
 	let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
 	return diffDays
 }
@@ -79,115 +74,114 @@ class CountdownList extends React.Component {
 	}
 }
 
-// class InputField extends React.Component {
-// 	render() {
-// 		return (
-// 			<input 
-// 				type='text'
-// 				placeholder={this.props.placeholder}
-// 				value={this.props.input}
-// 				onChange={this.props.handleInput}
-// 			/>
-// 		)
-// 	}
-// }
+class InputField extends React.Component {
+	render() {
+		return (
+			<input 
+				type='text'
+				placeholder={this.props.placeholder}
+				value={this.props.input}
+				onChange={this.props.handleInput}
+			/>
+		)
+	}
+}
 
-// class DatePicker extends React.Component {
-// 	render() {
-// 		return (
-// 			<input 
-// 				type='date'
-// 				value={this.props.date}
-// 				onChange={this.props.handleDateInput}
-// 			/>
-// 		)
-// 	}
-// }
+class DatePicker extends React.Component {
+	render() {
+		return (
+			<input 
+				type='date'
+				value={this.props.date}
+				onChange={this.props.handleDateInput}
+			/>
+		)
+	}
+}
 
-// class CountdownForm extends React.Component {
-// 	constructor(props) {
-// 		super(props)
-// 		this.state = {
-// 			title: this.props.title || '',
-// 			date: this.props.date || '',
-// 			color: this.props.color || ''
-// 		}
-// 	}
+class CountdownForm extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			title: this.props.title || '',
+			date: this.props.date || '',
+			color: this.props.color || ''
+		}
+	}
 
-// 	componentWillReceiveProps(nextProps) {
-// 		this.setState({
-// 			title: nextProps.title || '',
-// 			date: nextProps.date || '',
-// 			color: nextProps.color || ''
-// 		})
-// 	}
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			title: nextProps.title || '',
+			date: nextProps.date || '',
+			color: nextProps.color || ''
+		})
+	}
 
-// 	handleSubmit(e) {
-// 		e.preventDefault()
-// 		this.props.onSubmit(this.state, this.reset())
-// 	}
+	handleSubmit(e) {
+		e.preventDefault()
+		this.props.onSubmit(this.state, this.reset())
+	}
 
-// 	reset() {
-// 		this.setState({
-// 			title: '',
-// 			date: '',
-// 			color: ''
-// 		})
-// 	}
+	reset() {
+		this.setState({
+			title: '',
+			date: '',
+			color: ''
+		})
+	}
 
-// 	handleTitleInput(e) {
-// 		this.setState({
-// 			title: e.target.value
-// 		})
-// 	}
+	handleTitleInput(e) {
+		this.setState({
+			title: e.target.value
+		})
+	}
 
-// 	handleDateInput(e) {
-// 		this.setState({
-// 			date: e.target.value
-// 		})
-// 	}
+	handleDateInput(e) {
+		this.setState({
+			date: e.target.value
+		})
+	}
 
-// 	handleColorInput(e) {
-// 		this.setState({
-// 			color: e.target.value
-// 		})
-// 	}
+	handleColorInput(e) {
+		this.setState({
+			color: e.target.value
+		})
+	}
 
-// 	render() {
-// 		return (
-// 			<form
-// 				onSubmit={(e) => this.handleSubmit(e)}
-// 			>
-// 				<h3>Countdown </h3>
-// 				<InputField 
-// 					placeholder='title'
-// 					input={this.state.title}
-// 					handleInput={(e) => this.handleTitleInput(e)}
-// 				/>
-// 				<DatePicker 
-// 					date={this.state.date}
-// 					handleDateInput={(e) => this.handleDateInput(e)}
-// 				/>
-// 				<InputField 
-// 					placeholder='color'
-// 					input={this.state.color}
-// 					handleInput={(e) => this.handleColorInput(e)}
-// 				/>
-// 				<button type='submit'>Submit</button>
-// 			</form>
-// 		)
-// 	}
-// }
+	render() {
+		return (
+			<form
+				onSubmit={(e) => this.handleSubmit(e)}
+			>
+				<h3>Countdown </h3>
+				<InputField 
+					placeholder='title'
+					input={this.state.title}
+					handleInput={(e) => this.handleTitleInput(e)}
+				/>
+				<DatePicker 
+					date={this.state.date}
+					handleDateInput={(e) => this.handleDateInput(e)}
+				/>
+				<InputField 
+					placeholder='color'
+					input={this.state.color}
+					handleInput={(e) => this.handleColorInput(e)}
+				/>
+				<button type='submit'>Submit</button>
+			</form>
+		)
+	}
+}
 
 class CountdownApp extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			editId: -1,
 			countdowns: [
-				{title: 'My Birthday', date: new Date('2017-07-25'), color: '#cddc39', toShow: false},
-				{title: 'Driving Practice', date: new Date('2017-07-29'), color: '#8bc34a', toShow: false},
-				{title: 'Korean BBQ', date: new Date('2017-08-15'), color: '#8bc34a', toShow: false}
+				{title: 'My Birthday', date: '2017-07-25', color: '#cddc39', toShow: false},
+				{title: 'Driving Practice', date: '2017-07-29', color: '#8bc34a', toShow: false},
+				{title: 'Korean BBQ', date: '2017-08-15', color: '#8bc34a', toShow: false}
 			]
 		}
 	}
@@ -196,7 +190,7 @@ class CountdownApp extends React.Component {
 	// before updating or adding accordingly
 	handleCountdownForm(data) {
 		// Check if it is an update
-		if (this.state.editId > -1) {
+		if (this.state.editId) {
 			const index = this.state.editId
 			let countdowns = this.state.countdowns.slice()
 			countdowns[index] = data
@@ -204,7 +198,7 @@ class CountdownApp extends React.Component {
 				title: '',
 				date: '',
 				color: '',
-				editId: -1,
+				editId: null,
 				countdowns
 			})
 		
@@ -249,15 +243,6 @@ class CountdownApp extends React.Component {
 		})
 	}
 
-	handleCancelEdit() {
-		this.setState({
-			title: '',
-			date: '',
-			color: '',
-			editId: -1,
-		})
-	}
-
 	render() {
 		return (
 			<div>
@@ -265,9 +250,7 @@ class CountdownApp extends React.Component {
 					title={this.state.title}
 					date={this.state.date}
 					color={this.state.color}
-					editId={this.state.editId}
-					onCancelEdit={() => this.handleCancelEdit()}
-					onSubmit={(data) => this.handleCountdownForm(data)}
+					onSubmit={(data) => {this.handleCountdownForm(data)}}
 				/>
 				<CountdownList 
 					countdowns={this.state.countdowns}
@@ -281,8 +264,6 @@ class CountdownApp extends React.Component {
 }
 
 ReactDOM.render(
-	<MuiThemeProvider>
-		<CountdownApp />
-	</MuiThemeProvider>,
+	<CountdownApp />,
 	document.getElementById('app')
 )

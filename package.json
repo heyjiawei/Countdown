@@ -45,6 +45,7 @@
     "react-redux": "^5.0.5",
     "react-router": "^4.1.2",
     "react-tap-event-plugin": "^2.0.1",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "typeface-roboto": "0.0.35"
   }
 }
