@@ -2,8 +2,10 @@
   "name": "Countdown",
   "version": "1.0.0",
   "description": "Create count down to an event\r Inspired by ZUI days mobile app",
-  "main": "index.js",
+  "main": "webpack.config.js",
   "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --open",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src"
   },
@@ -39,6 +41,7 @@
   },
   "dependencies": {
     "history": "^4.6.3",
+    "material-ui": "^0.19.1",
     "react": "^15.6.1",
     "react-color": "^2.13.4",
     "react-dom": "^15.6.1",

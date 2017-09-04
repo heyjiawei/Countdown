@@ -14,8 +14,12 @@ Then,
 npm install
 </code>
 
-In a separate command prompt window, you can set up hot-reloading with the following command:
-
+Followed by 
 <code>
-webpack-dev-server
+npm run build
+</code>
+
+and 
+<code>
+npm start
 </code>
