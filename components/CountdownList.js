@@ -1,22 +1,45 @@
 import React from 'react'
-import Countdown from './Countdown'
+import Countdown from '../components/Countdown'
+
+const CountdownListStyle = {
+	listContainer: {
+		paddingLeft: "0em"
+	}
+}
+
+const calculateOffset = date => {
+	let today = new Date
+	let timeDiff = date.getTime() - today.getTime()
+	let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
+	return diffDays
+}
 
 class CountdownList extends React.Component {
-	renderCountdown () {
-		return (
-			<Countdown 
-				days={this.props.days}
-				title={this.props.title}
-				color={this.props.color}
-			/>
-		)
+	countdowns() {
+		let props = this.props
+		let rows = []
+		this.props.countdowns.forEach(function(countdown, index) {
+			 rows.push(
+			 	<Countdown
+					key={index}
+					title={countdown.title}
+					days={calculateOffset(countdown.date)}
+					color={countdown.color}
+					toShow={countdown.toShow}
+					onDelete={() => props.onDelete(index)}
+					onClick={() => props.onClick(index)}
+					onEdit={() => props.onEdit(index)}
+				/>
+			)
+		})
+		return rows
 	}
 
-	render () {
+	render() {
 		return (
 			<div>
-				<ul>
-					{this.renderCountdown}
+				<ul style={CountdownListStyle.listContainer}>
+					{this.countdowns()}
 				</ul>
 			</div>
 		)

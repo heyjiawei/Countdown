@@ -4,85 +4,90 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import CountdownForm from '../components/CountdownForm'
+import CountdownList from '../components/CountdownList'
+
 
 injectTapEventPlugin()
 
-class ButtonsGroup extends React.Component {
-	render() {
-		return (
-			<ul>
-				<button onClick={this.props.onDelete}>
-					Delete
-				</button>
-				<button onClick={this.props.onEdit}>
-					Edit
-				</button>
-			</ul>
-		)
-	}
-}
+// class ButtonsGroup extends React.Component {
+// 	render() {
+// 		return (
+// 			<ul>
+// 				<button onClick={this.props.onDelete}>
+// 					<i
+// 						className="material-icons"
+// 						onClick={this.props.onDelete}>delete
+// 					</i>
+// 				</button>
+// 				<button onClick={this.props.onEdit}>
+// 					Edit
+// 				</button>
+// 			</ul>
+// 		)
+// 	}
+// }
 
-class Countdown extends React.Component {
-	render () {
-		return (
-			<li>
-				<div onClick={this.props.onClick} >
-					{this.props.title} - {this.props.days}, {this.props.color}
-				</div>
-				{this.props.toShow ? 
-				<ButtonsGroup 
-					onDelete={this.props.onDelete} 
-					onEdit={this.props.onEdit}
-				/> 
-				: null}
-			</li>
-		)
-	}
-}
+// class Countdown extends React.Component {
+// 	render () {
+// 		return (
+// 			<li>
+// 				<div onClick={this.props.onClick} >
+// 					{this.props.title} - {this.props.days}, {this.props.color}
+// 				</div>
+// 				{this.props.toShow ?
+// 				<ButtonsGroup
+// 					onDelete={this.props.onDelete}
+// 					onEdit={this.props.onEdit}
+// 				/>
+// 				: null}
+// 			</li>
+// 		)
+// 	}
+// }
 
-const calculateOffset = date => {
-	let today = new Date
-	let timeDiff = date.getTime() - today.getTime()
-	let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
-	return diffDays
-}
-
-class CountdownList extends React.Component {
-	countdowns() {
-		let props = this.props
-		let rows = []
-		this.props.countdowns.forEach(function(countdown, index) {
-			 rows.push(
-			 	<Countdown 
-					key={index}
-					title={countdown.title} 
-					days={calculateOffset(countdown.date)}
-					color={countdown.color}
-					toShow={countdown.toShow}
-					onDelete={() => props.onDelete(index)}
-					onClick={() => props.onClick(index)}
-					onEdit={() => props.onEdit(index)}
-				/>
-			)			
-		})
-		return rows
-	}
-
-	render() {
-		return (
-			<div>
-				<ul>
-					{this.countdowns()}
-				</ul>
-			</div>
-		)
-	}
-}
+// const calculateOffset = date => {
+// 	let today = new Date
+// 	let timeDiff = date.getTime() - today.getTime()
+// 	let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
+// 	return diffDays
+// }
+//
+// class CountdownList extends React.Component {
+// 	countdowns() {
+// 		let props = this.props
+// 		let rows = []
+// 		this.props.countdowns.forEach(function(countdown, index) {
+// 			 rows.push(
+// 			 	<Countdown
+// 					key={index}
+// 					title={countdown.title}
+// 					days={calculateOffset(countdown.date)}
+// 					color={countdown.color}
+// 					toShow={countdown.toShow}
+// 					onDelete={() => props.onDelete(index)}
+// 					onClick={() => props.onClick(index)}
+// 					onEdit={() => props.onEdit(index)}
+// 				/>
+// 			)
+// 		})
+// 		return rows
+// 	}
+//
+// 	render() {
+// 		return (
+// 			<div>
+// 				<ul>
+// 					{this.countdowns()}
+// 				</ul>
+// 			</div>
+// 		)
+// 	}
+// }
 
 // class InputField extends React.Component {
 // 	render() {
 // 		return (
-// 			<input 
+// 			<input
 // 				type='text'
 // 				placeholder={this.props.placeholder}
 // 				value={this.props.input}
@@ -95,7 +100,7 @@ class CountdownList extends React.Component {
 // class DatePicker extends React.Component {
 // 	render() {
 // 		return (
-// 			<input 
+// 			<input
 // 				type='date'
 // 				value={this.props.date}
 // 				onChange={this.props.handleDateInput}
@@ -159,16 +164,16 @@ class CountdownList extends React.Component {
 // 				onSubmit={(e) => this.handleSubmit(e)}
 // 			>
 // 				<h3>Countdown </h3>
-// 				<InputField 
+// 				<InputField
 // 					placeholder='title'
 // 					input={this.state.title}
 // 					handleInput={(e) => this.handleTitleInput(e)}
 // 				/>
-// 				<DatePicker 
+// 				<DatePicker
 // 					date={this.state.date}
 // 					handleDateInput={(e) => this.handleDateInput(e)}
 // 				/>
-// 				<InputField 
+// 				<InputField
 // 					placeholder='color'
 // 					input={this.state.color}
 // 					handleInput={(e) => this.handleColorInput(e)}
@@ -187,7 +192,9 @@ class CountdownApp extends React.Component {
 			countdowns: [
 				{title: 'My Birthday', date: new Date('2017-07-25'), color: '#cddc39', toShow: false},
 				{title: 'Driving Practice', date: new Date('2017-07-29'), color: '#8bc34a', toShow: false},
-				{title: 'Korean BBQ', date: new Date('2017-08-15'), color: '#8bc34a', toShow: false}
+				{title: 'Korean BBQ', date: new Date('2017-08-15'), color: '#8bc34a', toShow: false},
+				{title: 'Christmas', date: new Date('2018-08-25'), color: '#8bc34a', toShow: false},
+				{title: 'Ragnarok', date: new Date('2020-12-25'), color: '#2196f3', toShow: false}
 			]
 		}
 	}
@@ -207,7 +214,7 @@ class CountdownApp extends React.Component {
 				editId: -1,
 				countdowns
 			})
-		
+
 		// Otherwise add new entry
 		} else {
 			data.toShow = false
@@ -230,7 +237,7 @@ class CountdownApp extends React.Component {
 	}
 
 	handleDelete(index) {
-		const countdowns = [...this.state.countdowns.slice(0, index), 
+		const countdowns = [...this.state.countdowns.slice(0, index),
 		...this.state.countdowns.slice(index+1)]
 
 		this.setState({
@@ -261,7 +268,7 @@ class CountdownApp extends React.Component {
 	render() {
 		return (
 			<div>
-				<CountdownForm 
+				<CountdownForm
 					title={this.state.title}
 					date={this.state.date}
 					color={this.state.color}
@@ -269,7 +276,7 @@ class CountdownApp extends React.Component {
 					onCancelEdit={() => this.handleCancelEdit()}
 					onSubmit={(data) => this.handleCountdownForm(data)}
 				/>
-				<CountdownList 
+				<CountdownList
 					countdowns={this.state.countdowns}
 					onClick={(index) => this.handleShowCountdown(index)}
 					onEdit={(index) => this.handleEdit(index)}
