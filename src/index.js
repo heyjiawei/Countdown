@@ -194,7 +194,8 @@ class CountdownApp extends React.Component {
 				{title: 'Driving Practice', date: new Date('2017-07-29'), color: '#8bc34a', toShow: false},
 				{title: 'Korean BBQ', date: new Date('2017-08-15'), color: '#8bc34a', toShow: false},
 				{title: 'Christmas', date: new Date('2018-08-25'), color: '#8bc34a', toShow: false},
-				{title: 'Ragnarok', date: new Date('2020-12-25'), color: '#2196f3', toShow: false}
+				{title: 'Ragnarok, always since you give me energy, when you are sad, i will be by your side. Even if you take my side, as long as i have someone as fine as you, i think ill appreciate if i continue this super duper long elastic static sentence and get this tested later', date: new Date('2020-12-25'), color: '#2196f3', toShow: false},
+				{title: 'Ragnarok, always since you give me energy, when you are sad, i will be by your side. Even if you take my side, as long as i have someone as fine as you, i think ill appreciate if i continue this super duper long elastic static sentence and get this tested later', date: new Date('2018-05-25'), color: '#2196f3', toShow: false}
 			]
 		}
 	}

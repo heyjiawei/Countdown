@@ -28,7 +28,7 @@ class Countdown extends React.Component {
 		}
 
 		let details = null;
-		if (calculateWidth(this.props.days) < 99) {
+		if (calculateWidth(this.props.days) < 75) {
 			details = <InlineBlockLayout {...this.props} />
 		} else {
 			details = <BlockLayout {...this.props} />
@@ -50,7 +50,6 @@ class Countdown extends React.Component {
 
 class InlineBlockLayout extends React.Component {
 	render() {
-		console.log(this.props)
 		const Style = {
 			timerDiv: {
 				fontFamily: "Roboto, sans-serif",
@@ -79,10 +78,10 @@ class InlineBlockLayout extends React.Component {
 				onClick={this.props.onClick}
 			>
 				<div style={Style.dayDiv}>
-					{this.props.days}
+					<span>{this.props.days}</span>
 				</div>
 				<div style={Style.titleDiv}>
-					{this.props.title}
+					<span>{this.props.title}</span>
 				</div>
 			</div>
 		)
@@ -90,6 +89,67 @@ class InlineBlockLayout extends React.Component {
 }
 
 class BlockLayout extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			isTitleTruncated: false
+		}
+		this.handleWindowResize = this.handleWindowResize.bind(this)
+	}
+
+	componentDidMount() {
+		// Initial title text resize
+		this.handleWindowResize()
+		// Add event listener to resize title text when window resizes
+		window.addEventListener("resize", this.handleWindowResize)
+	}
+
+	// This unmount function is necessary as countdown item
+	// can be deleted
+	componentWillUnmount() {
+		window.removeEventListener("resize", this.handleWindowResize)
+	}
+
+	handleWindowResize() {
+		if (this.titleSpan.offsetHeight > this.daysSpan.offsetHeight) {
+			this.manageTruncate(this.daysSpan, this.titleSpan)
+		} else {
+			this.manageLengthen(this.daysDiv, this.titleSpan)
+		}
+	}
+
+	// Truncate title string to fit within daysDiv container
+	// when screen shrink
+	manageTruncate(daysSpan, titleSpan) {
+		console.log("in manageTruncate")
+		let truncatedTitle = titleSpan.innerText
+		// console.log(truncatedTitle)
+		while (titleSpan.offsetHeight > daysSpan.offsetHeight) {
+			truncatedTitle = truncatedTitle.slice(0, -1)
+			titleSpan.innerText = truncatedTitle + "..."
+		}
+
+		this.setState({
+			isTitleTruncated: true,
+			truncatedTitleIndex: truncatedTitle.length
+		})
+	}
+
+	// Lengthen title string to fit within daysDiv container
+	// when screen width expands
+	manageLengthen(daysDiv, titleSpan) {
+		// if (this.state.isTitleTruncated) {
+		// 	let truncatedTitle = titleSpan.innerText
+		// 	console.log("in manageLengthen")
+			// let truncatedIndex = this.state.truncatedTitleIndex
+			// let truncatedTitle = this.props.title
+			// while (titleSpan.offsetWidth + 150 < daysDiv.offsetWidth) {
+			// 	truncatedTitle = truncatedTitle.substring(0, truncatedIndex+1)
+			// 	titleSpan.innerText = truncatedTitle + "..."
+			// }
+		// }
+	}
+
 	render() {
 		const Style = {
 			dayDiv: {
@@ -107,15 +167,22 @@ class BlockLayout extends React.Component {
 			titleSpan: {
 				fontSize: "smaller",
 				opacity: 0.8,
-				padding: "0em 2em"
+				padding: "0em 1em"
 			}
 		}
 
 		return (
 			<div onClick={this.props.onClick} >
-				<div style={Style.dayDiv}>
-					<span>{this.props.days}</span>
-					<span style={Style.titleSpan}>{this.props.title}</span>
+				<div
+					ref={node => this.daysDiv = node}
+					style={Style.dayDiv}>
+					<span ref={node => this.daysSpan = node}>{this.props.days}</span>
+					<span
+						style={Style.titleSpan}
+						ref={node => this.titleSpan = node}
+					>
+					{this.props.title}
+					</span>
 				</div>
 			</div>
 		)
