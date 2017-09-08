@@ -121,9 +121,9 @@ class BlockLayout extends React.Component {
 	// Truncate title string to fit within daysDiv container
 	// when screen shrink
 	manageTruncate(daysSpan, titleSpan) {
-		console.log("in manageTruncate")
+
 		let truncatedTitle = titleSpan.innerText
-		// console.log(truncatedTitle)
+
 		while (titleSpan.offsetHeight > daysSpan.offsetHeight) {
 			truncatedTitle = truncatedTitle.slice(0, -1)
 			titleSpan.innerText = truncatedTitle + "..."
@@ -131,23 +131,32 @@ class BlockLayout extends React.Component {
 
 		this.setState({
 			isTitleTruncated: true,
-			truncatedTitleIndex: truncatedTitle.length
+			title: truncatedTitle,
 		})
 	}
 
 	// Lengthen title string to fit within daysDiv container
 	// when screen width expands
 	manageLengthen(daysDiv, titleSpan) {
-		// if (this.state.isTitleTruncated) {
-		// 	let truncatedTitle = titleSpan.innerText
-		// 	console.log("in manageLengthen")
-			// let truncatedIndex = this.state.truncatedTitleIndex
-			// let truncatedTitle = this.props.title
-			// while (titleSpan.offsetWidth + 150 < daysDiv.offsetWidth) {
-			// 	truncatedTitle = truncatedTitle.substring(0, truncatedIndex+1)
-			// 	titleSpan.innerText = truncatedTitle + "..."
-			// }
-		// }
+		if (this.state.isTitleTruncated) {
+
+			let truncatedIndex = this.state.title.length
+			let truncatedTitle = this.state.title
+
+			while (titleSpan.offsetWidth + 150 < daysDiv.offsetWidth) {
+				if (truncatedIndex < this.props.title.length) {
+					truncatedTitle += this.props.title.charAt(truncatedIndex)
+					titleSpan.innerText = truncatedTitle + "..."
+					truncatedIndex++
+				} else {
+					break
+				}
+			}
+
+			this.setState({
+				title: truncatedTitle
+			})
+		}
 	}
 
 	render() {
