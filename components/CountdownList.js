@@ -1,5 +1,6 @@
 import React from 'react'
 import Countdown from '../components/Countdown'
+import PropTypes from 'prop-types'
 
 const CountdownListStyle = {
 	listContainer: {
@@ -44,6 +45,18 @@ class CountdownList extends React.Component {
 			</div>
 		)
 	}
+}
+
+CountdownList.propTypes = {
+	countdowns: PropTypes.arrayOf(PropTypes.shape({
+		title: PropTypes.string.isRequired,
+		date: PropTypes.instanceOf(Date).isRequired,
+		color: PropTypes.string.isRequired,
+		toShow: PropTypes.bool.isRequired,
+		onDelete: PropTypes.func,
+		onClick: PropTypes.func,
+		onEdit: PropTypes.func
+	})).isRequired
 }
 
 export default CountdownList

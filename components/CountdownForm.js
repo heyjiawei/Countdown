@@ -175,4 +175,10 @@ class CountdownForm extends React.Component {
 	}
 }
 
+CountdownForm.propTypes = {
+	title: PropTypes.string,
+	date: PropTypes.object,
+	color: PropTypes.string
+}
+
 export default CountdownForm
