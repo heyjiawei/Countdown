@@ -5,29 +5,7 @@ import DatePicker from 'material-ui/DatePicker'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import { CirclePicker } from 'react-color'
-// import PropTypes from 'prop-types'
-
-// class InputField extends React.Component {
-// 	render() {
-// 		return (
-// 			<TextField
-// 	      floatingLabelText="Title"
-// 	    />
-// 		)
-// 	}
-// }
-
-// class DatePicker extends React.Component {
-// 	render() {
-// 		return (
-// 			<input 
-// 				type='date'
-// 				value={this.props.date}
-// 				onChange={this.props.handleDateInput}
-// 			/>
-// 		)
-// 	}
-// }
+import PropTypes from 'prop-types'
 
 class CountdownForm extends React.Component {
 	constructor(props) {
@@ -36,14 +14,19 @@ class CountdownForm extends React.Component {
 			open: false,
 			title: '',
 			date: {},
-			color: ''
+			color: '#000000',
+			formErrors: {
+				title: '',
+				date: ''
+			},
+			isFormValid: false
 		}
 	}
 
 	componentWillReceiveProps(nextProps) {
-		// Update state when edit button is clicked. 
-		// Otherwise, ignore nextProps to prevent 
-		// controlled component from turning into 
+		// Update state when edit button is clicked.
+		// Otherwise, ignore nextProps to prevent
+		// controlled component from turning into
 		// uncontrolled component
 
 		if (nextProps.editId > -1) {
@@ -52,7 +35,7 @@ class CountdownForm extends React.Component {
 				title: nextProps.title,
 				date: nextProps.date,
 				color: nextProps.color
-			})	
+			})
 		}
 	}
 
@@ -70,8 +53,23 @@ class CountdownForm extends React.Component {
 		this.reset()
 	}
 
+	validateForm() {
+		let isTitleValid = (this.state.title.trim().length > 0);
+		let isDateValid = (Object.prototype.toString.call(this.state.date) === '[object Date]')
+		let errorMsg = 'This field is required'
+		this.setState({
+			isFormValid: isTitleValid && isDateValid,
+			formErrors: {
+				title: isTitleValid ? '' : errorMsg,
+				date: isDateValid ? '' : errorMsg
+			}
+		}, () => this.handleSubmit())
+	}
+
 	handleSubmit() {
-		this.props.onSubmit(this.state, this.reset())
+		if (this.state.isFormValid) {
+			this.props.onSubmit(this.state, this.reset())
+		}
 	}
 
 	reset() {
@@ -79,7 +77,12 @@ class CountdownForm extends React.Component {
 			open: false,
 			title: '',
 			date: {},
-			color: ''
+			color: '#000000',
+			formErrors: {
+				title: '',
+				date: ''
+			},
+			isFormValid: false
 		})
 	}
 
@@ -108,6 +111,15 @@ class CountdownForm extends React.Component {
 		return date + "/" + month + "/" + year
 	}
 
+	getDialogTitle() {
+		let title = " Countdown"
+		if (this.state.title.length === 0) {
+			return "Add" + title
+		} else {
+			return "Edit" + title
+		}
+	}
+
 	render() {
 		const actions = [
 			<FlatButton
@@ -118,17 +130,17 @@ class CountdownForm extends React.Component {
 			<FlatButton
 				label="Submit"
 				primary={true}
-				onClick={() => this.handleSubmit()}
+				onClick={() => this.validateForm()}
 			/>
 		]
 		return (
 			<div>
-				<RaisedButton 
-					label="Add Countdown" 
-					onClick={() => this.handleOpenDialog()} 
+				<RaisedButton
+					label="Add Countdown"
+					onClick={() => this.handleOpenDialog()}
 				/>
 				<Dialog
-					title="<ADD/EDIT> Countdown"
+					title={this.getDialogTitle()}
 					actions={actions}
 					model={false}
 					open={this.state.open}
@@ -141,13 +153,15 @@ class CountdownForm extends React.Component {
 				      name="title"
 				      id="title"
 				      value={this.state.title}
+							errorText={this.state.formErrors.title}
 							onChange={(event, newValue) => this.handleTitleInput(newValue)}
 				    />
-						<DatePicker 
+						<DatePicker
 							formatDate={(date) => this.formatDate(date)}
 							mode="landscape"
 							hintText="Date"
 							value={this.state.date}
+							errorText={this.state.formErrors.date}
 							onChange={(e, date) => this.handleDateInput(date)}
 						/>
 						<CirclePicker
@@ -155,7 +169,7 @@ class CountdownForm extends React.Component {
 							onChangeComplete={(color, event) => this.handleColorInput(color)}
 						/>
 					</form>
-				</Dialog>	
+				</Dialog>
 			</div>
 		)
 	}
