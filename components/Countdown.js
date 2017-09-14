@@ -15,7 +15,7 @@ const calculateWidth = days => {
 	}
 }
 
-class Countdown extends React.Component {
+export default class Countdown extends React.Component {
 	render () {
 		const CountdownStyle = {
 			timerList: {
@@ -297,5 +297,3 @@ class ButtonsGroup extends React.Component {
 		)
 	}
 }
-
-export default Countdown

@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { CirclePicker } from 'react-color'
 import PropTypes from 'prop-types'
 
-class CountdownForm extends React.Component {
+export default class CountdownForm extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -15,6 +15,7 @@ class CountdownForm extends React.Component {
 			title: '',
 			date: {},
 			color: '#000000',
+			id: '',
 			formErrors: {
 				title: '',
 				date: ''
@@ -28,13 +29,14 @@ class CountdownForm extends React.Component {
 		// Otherwise, ignore nextProps to prevent
 		// controlled component from turning into
 		// uncontrolled component
-
-		if (nextProps.editId > -1) {
+		const data = nextProps.data;
+		if (data.id.length > 0) {
 			this.setState({
 				open: true,
-				title: nextProps.title,
-				date: nextProps.date,
-				color: nextProps.color
+				title: data.title,
+				date: data.date,
+				color: data.color,
+				id: data.id
 			})
 		}
 	}
@@ -47,8 +49,8 @@ class CountdownForm extends React.Component {
 
 	handleCloseDialog() {
 		// Call CountdownApp Component's (parent component)
-		// onCancelEdit function so nextProps.editId will be
-		// set to -1 when the dialog is closed
+		// onCancelEdit function so form.id will be
+		// set to false when the dialog is closed
 		this.props.onCancelEdit()
 		this.reset()
 	}
@@ -68,7 +70,12 @@ class CountdownForm extends React.Component {
 
 	handleSubmit() {
 		if (this.state.isFormValid) {
-			this.props.onSubmit(this.state, this.reset())
+			this.props.onSubmit({
+				id: this.state.id,
+				title: this.state.title,
+				color: this.state.color,
+				date: this.state.date
+			}, this.reset())
 		}
 	}
 
@@ -78,6 +85,7 @@ class CountdownForm extends React.Component {
 			title: '',
 			date: {},
 			color: '#000000',
+			id: '',
 			formErrors: {
 				title: '',
 				date: ''
@@ -113,7 +121,7 @@ class CountdownForm extends React.Component {
 
 	getDialogTitle() {
 		let title = " Countdown"
-		if (this.state.title.length === 0) {
+		if (this.state.id.length === 0) {
 			return "Add" + title
 		} else {
 			return "Edit" + title
@@ -175,10 +183,8 @@ class CountdownForm extends React.Component {
 	}
 }
 
-CountdownForm.propTypes = {
-	title: PropTypes.string,
-	date: PropTypes.object,
-	color: PropTypes.string
-}
-
-export default CountdownForm
+// CountdownForm.propTypes = {
+// 	title: PropTypes.string,
+// 	date: PropTypes.object,
+// 	color: PropTypes.string
+// }

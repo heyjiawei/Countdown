@@ -19,17 +19,17 @@ class CountdownList extends React.Component {
 	countdowns() {
 		let props = this.props
 		let rows = []
-		this.props.countdowns.forEach(function(countdown, index) {
+		this.props.countdowns.forEach(function(countdown) {
 			 rows.push(
 			 	<Countdown
-					key={index}
+					key={countdown.id}
 					title={countdown.title}
 					days={calculateOffset(countdown.date)}
 					color={countdown.color}
 					toShow={countdown.toShow}
-					onDelete={() => props.onDelete(index)}
-					onClick={() => props.onClick(index)}
-					onEdit={() => props.onEdit(index)}
+					onDelete={() => props.onDelete(countdown.id)}
+					onClick={() => props.onClick(countdown.id)}
+					onEdit={() => props.onEdit(countdown.id)}
 				/>
 			)
 		})
@@ -47,16 +47,17 @@ class CountdownList extends React.Component {
 	}
 }
 
-CountdownList.propTypes = {
-	countdowns: PropTypes.arrayOf(PropTypes.shape({
-		title: PropTypes.string.isRequired,
-		date: PropTypes.instanceOf(Date).isRequired,
-		color: PropTypes.string.isRequired,
-		toShow: PropTypes.bool.isRequired,
-		onDelete: PropTypes.func,
-		onClick: PropTypes.func,
-		onEdit: PropTypes.func
-	})).isRequired
-}
+// CountdownList.propTypes = {
+// 	countdowns: PropTypes.arrayOf(PropTypes.shape({
+// 		id: PropTypes.string.isRequired,
+// 		title: PropTypes.string.isRequired,
+// 		date: PropTypes.instanceOf(Date).isRequired,
+// 		color: PropTypes.string.isRequired,
+// 		toShow: PropTypes.bool.isRequired,
+// 		onDelete: PropTypes.func,
+// 		onClick: PropTypes.func,
+// 		onEdit: PropTypes.func
+// 	})).isRequired
+// }
 
 export default CountdownList

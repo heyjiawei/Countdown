@@ -1,38 +1,67 @@
-const initialState = {
-	countdowns: [{
-		id: 0,
-		title: 'Birthday',
-		date: '25-07-2017',
-		colour: 'blue'
-	}, {
-		id: 1,
-		title: 'Travel to Michu Pichu for 8 days',
-		date: '5-09-2017',
-		colour: 'orange'
-	}, {
-		id: 2,
-		title: 'The red fox jumped over the green barrel',
-		date: '30-12-2017',
-		colour: 'green'
-	}]
+import shortid from 'shortid'
+
+export function toggleShow(state, id) {
+  const countdowns = state.countdowns.map((countdown) => {
+    if (countdown.id === id) {
+      countdown.toShow = !countdown.toShow;
+    }
+    return countdown;
+  });
+  return { countdowns };
 }
 
-function countdownApp(state = initialState, action) {
-	switch (action.type) {
-		case 'ADD_COUNTDOWN':
-			return Object.assign({}, state, {
-				countdowns: [
-					...state.countdowns,
-					{
-						title: action.title,
-						date: action.date,
-						colour: action.colour
-					}
-				]
-			})
-		default:
-			return state
-	}
+export function addCountdown(state, countdown) {
+  const newCountdown = Object.assign({}, countdown, {
+    id: shortid.generate(),
+    toShow: false
+  });
+
+  return {
+    countdowns: state.countdowns.concat([newCountdown])
+  };
 }
 
-export default countdownApp
+export function editCountdown(state, countdown) {
+  const update = Object.assign({}, countdown, {
+    toshow: false
+  });
+
+  return {
+    countdowns: state.countdowns.map((obj) => {
+      if (obj.id === update.id) {
+        return update;
+      } else {
+        return obj;
+      }
+    }),
+    form: {
+      id: false
+    }
+  };
+}
+
+export function deleteCountdown(state, id) {
+  return {
+    countdowns: state.countdowns.filter((countdown) => countdown.id !== id)
+  }
+}
+
+export function handleEdit(state, id) {
+  const editCountdown = state.countdowns.filter((countdown) => countdown.id === id)[0];
+  return {
+    form: {
+      title: editCountdown.title,
+      color: editCountdown.color,
+      date: editCountdown.date,
+      id: editCountdown.id
+    }
+  }
+}
+
+export function handleCancelEdit() {
+  return {
+    form: {
+      id: false
+    }
+  };
+}
