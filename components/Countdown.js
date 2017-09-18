@@ -146,7 +146,9 @@ class BlockLayout extends React.Component {
 		}
 
 		return (
-			<div onClick={this.props.onClick} >
+			<div
+				className='toggle-option'
+				onClick={this.props.onClick} >
 				<div
 					ref={node => this.daysDiv = node}
 					style={Style.dayDiv}>
@@ -254,6 +256,7 @@ class InlineBlockLayout extends React.Component {
 
 		return (
 			<div
+				className='toggle-option'
 				style={Style.timerDiv}
 				onClick={this.props.onClick}
 				ref={node => this.timerDiv = node}
