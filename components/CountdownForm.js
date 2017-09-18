@@ -60,6 +60,7 @@ export default class CountdownForm extends React.Component {
 		let isDateValid = (Object.prototype.toString.call(this.state.date) === '[object Date]')
 		let errorMsg = 'This field is required'
 		this.setState({
+			title: this.state.title.trim(),
 			isFormValid: isTitleValid && isDateValid,
 			formErrors: {
 				title: isTitleValid ? '' : errorMsg,

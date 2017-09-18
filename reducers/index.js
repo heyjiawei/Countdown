@@ -22,14 +22,10 @@ export function addCountdown(state, countdown) {
 }
 
 export function editCountdown(state, countdown) {
-  const update = Object.assign({}, countdown, {
-    toshow: false
-  });
-
   return {
     countdowns: state.countdowns.map((obj) => {
-      if (obj.id === update.id) {
-        return update;
+      if (obj.id === countdown.id) {
+        return countdown;
       } else {
         return obj;
       }
