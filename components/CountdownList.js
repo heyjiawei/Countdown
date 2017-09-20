@@ -47,17 +47,17 @@ class CountdownList extends React.Component {
 	}
 }
 
-// CountdownList.propTypes = {
-// 	countdowns: PropTypes.arrayOf(PropTypes.shape({
-// 		id: PropTypes.string.isRequired,
-// 		title: PropTypes.string.isRequired,
-// 		date: PropTypes.instanceOf(Date).isRequired,
-// 		color: PropTypes.string.isRequired,
-// 		toShow: PropTypes.bool.isRequired,
-// 		onDelete: PropTypes.func,
-// 		onClick: PropTypes.func,
-// 		onEdit: PropTypes.func
-// 	})).isRequired
-// }
+CountdownList.propTypes = {
+	countdowns: PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		title: PropTypes.string.isRequired,
+		date: PropTypes.instanceOf(Date).isRequired,
+		color: PropTypes.string.isRequired,
+		toShow: PropTypes.bool.isRequired
+	})).isRequired,
+	onDelete: PropTypes.func.isRequired,
+	onClick: PropTypes.func.isRequired,
+	onEdit: PropTypes.func.isRequired
+};
 
-export default CountdownList
+export default CountdownList;
