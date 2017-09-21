@@ -185,8 +185,15 @@ export default class CountdownForm extends React.Component {
 }
 
 CountdownForm.propTypes = {
-	title: PropTypes.string,
-	date: PropTypes.object,
-	color: PropTypes.string,
-	id: PropTypes.string
+	data: PropTypes.shape({
+    id: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.bool
+  	]).isRequired,
+		title: PropTypes.string,
+		date: PropTypes.object,
+		color: PropTypes.string
+  }).isRequired,
+	onCancelEdit: PropTypes.func.isRequired,
+	onSubmit: PropTypes.func.isRequired
 }

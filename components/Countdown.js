@@ -1,6 +1,6 @@
 import React from 'react'
 import { calculateDisplayWidth } from './Utility';
-
+import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
 import ActionEdit from 'material-ui/svg-icons/content/create'
@@ -54,4 +54,13 @@ export default class Countdown extends React.Component {
 			</li>
 		)
 	}
+}
+
+Countdown.propTypes = {
+	title: PropTypes.string.isRequired,
+	days: PropTypes.number.isRequired,
+	color: PropTypes.string.isRequired,
+	onClick: PropTypes.func.isRequired,
+	onDelete: PropTypes.func.isRequired,
+	onEdit: PropTypes.func.isRequired
 }

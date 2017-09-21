@@ -9,3 +9,10 @@ export const calculateDisplayWidth = days => {
 		}
 	}
 }
+
+export const calculateOffset = date => {
+	let today = new Date
+	let timeDiff = date.getTime() - today.getTime()
+	let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
+	return diffDays
+}

@@ -1,18 +1,12 @@
 import React from 'react'
 import Countdown from '../components/Countdown'
+import { calculateOffset } from './Utility';
 import PropTypes from 'prop-types'
 
 const CountdownListStyle = {
 	listContainer: {
 		paddingLeft: "0em"
 	}
-}
-
-const calculateOffset = date => {
-	let today = new Date
-	let timeDiff = date.getTime() - today.getTime()
-	let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
-	return diffDays
 }
 
 class CountdownList extends React.Component {

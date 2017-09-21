@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Countdown Block/InlineBlock Layout should render BlockLayout correctly 1`] = `
+<div
+  className="toggle-option"
+  onClick={[Function]}
+>
+  <div
+    style={
+      Object {
+        "backgroundColor": "#8bc34a",
+        "color": "white",
+        "display": "inline-block",
+        "fontFamily": "Roboto, sans-serif",
+        "fontSize": "larger",
+        "height": "36px",
+        "lineHeight": "35px",
+        "marginRight": "1%",
+        "padding": "0em 0.5em",
+        "width": "99%",
+      }
+    }
+  >
+    <span>
+      365
+    </span>
+    <span
+      style={
+        Object {
+          "fontSize": "smaller",
+          "opacity": 0.8,
+          "padding": "0em 1em",
+        }
+      }
+    >
+      Driving Practice
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Countdown Block/InlineBlock Layout should render InlineBlockLayout correctly 1`] = `
+<div
+  className="toggle-option"
+  onClick={[Function]}
+  style={
+    Object {
+      "fontFamily": "Roboto, sans-serif",
+      "fontSize": "larger",
+      "height": "36px",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "backgroundColor": "#8bc34a",
+        "color": "white",
+        "display": "inline-block",
+        "height": "36px",
+        "lineHeight": "35px",
+        "marginRight": "1%",
+        "padding": "0em 0.5em",
+        "width": "9.863013698630137%",
+      }
+    }
+  >
+    <span>
+      36
+    </span>
+  </div>
+  <div
+    style={
+      Object {
+        "display": "inline",
+        "fontSize": "smaller",
+        "opacity": 0.6,
+      }
+    }
+  >
+    <span>
+      Driving Practice
+    </span>
+  </div>
+</div>
+`;
